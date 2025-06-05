@@ -1,17 +1,15 @@
 package com.example.data.model
 
 import com.example.plugins.ObjectIdSerializer
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.bson.types.ObjectId
 
 @Serializable
-data class ChatMessage(
+data class Group(
     @SerialName("id")
     @Serializable(with = ObjectIdSerializer::class)
     val id: ObjectId = ObjectId(),
-    val sender: String,
-    val message: String,
-    val timeStamp: String,
-    val groupId: String
+    val name: String,
+    val tag:String
 )

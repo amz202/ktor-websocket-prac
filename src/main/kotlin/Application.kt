@@ -2,6 +2,7 @@ package com.example
 
 import com.example.data.datasource.ChatDataSource
 import com.example.data.datasource.MongoChatDataSource
+import com.example.data.datasource.MongoGroupDataSource
 import com.example.plugins.configureMonitoring
 import com.example.plugins.configureRouting
 import com.example.plugins.configureSerialization
@@ -22,9 +23,10 @@ fun Application.module() {
         connectionString = "mongodb+srv://abdulmajidzeeshan4:${mongoPw}@cluster0.blwr6uy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     ).getDatabase(dbName)
     val chatDataSource = MongoChatDataSource(db)
+    val groupDataSource = MongoGroupDataSource(db)
 
     configureSerialization()
     configureMonitoring()
     configureSockets(chatDataSource)
-    configureRouting(chatDataSource)
+    configureRouting(chatDataSource, groupDataSource)
 }

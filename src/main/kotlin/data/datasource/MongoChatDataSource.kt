@@ -2,7 +2,6 @@ package com.example.data.datasource
 
 import com.example.data.model.ChatMessage
 import com.example.data.model.EditMessageRequest
-import com.example.data.model.SentMessage
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.toList
 import com.mongodb.client.model.Filters.eq
@@ -15,8 +14,8 @@ class MongoChatDataSource(db: MongoDatabase) : ChatDataSource {
         return chats.insertOne(message).wasAcknowledged()
     }
 
-    override suspend fun getRecentMessages(): List<ChatMessage> {
-        return chats.find().toList()
+    override suspend fun getRecentMessages(groupId: String): List<ChatMessage> {
+        return chats.find(eq("groupId",groupId)).toList()
     }
 
     override suspend fun deleteMessage(id: String): Boolean {
