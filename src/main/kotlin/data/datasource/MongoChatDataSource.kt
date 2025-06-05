@@ -14,8 +14,8 @@ class MongoChatDataSource(db: MongoDatabase) : ChatDataSource {
         return chats.insertOne(message).wasAcknowledged()
     }
 
-    override suspend fun getRecentMessages(): List<ChatMessage> {
-        return chats.find().toList()
+    override suspend fun getRecentMessages(groupId: String): List<ChatMessage> {
+        return chats.find(eq("groupId",groupId)).toList()
     }
 
     override suspend fun deleteMessage(id: String): Boolean {
