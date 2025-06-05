@@ -3,7 +3,6 @@ package com.example.routes
 import com.example.data.datasource.ChatDataSource
 import com.example.data.model.ChatMessage
 import com.example.data.model.EditMessageRequest
-import com.example.data.model.SentMessage
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route

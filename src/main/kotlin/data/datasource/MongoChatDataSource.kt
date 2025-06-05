@@ -2,7 +2,6 @@ package com.example.data.datasource
 
 import com.example.data.model.ChatMessage
 import com.example.data.model.EditMessageRequest
-import com.example.data.model.SentMessage
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.toList
 import com.mongodb.client.model.Filters.eq
