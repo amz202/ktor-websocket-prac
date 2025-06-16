@@ -14,15 +14,15 @@ import io.ktor.server.routing.*
 fun Route.recentChat(chatDataSource: ChatDataSource){
     get("/{groupId}/recentChat"){
         val groupId = call.parameters["groupId"]
-        if (groupId != null) {
-            val messages = chatDataSource.getRecentMessages(groupId)
-            if (messages.isNotEmpty()) {
-                call.respond(HttpStatusCode.OK, messages)
-            } else {
-                call.respond(HttpStatusCode.NoContent, "No recent messages found for this group.")
-            }
+        if (groupId == null) {
+            call.respond(HttpStatusCode.BadRequest, "Group ID is required.")
+            return@get
+        }
+        val messages = chatDataSource.getRecentMessages(groupId)
+        if (messages.isNotEmpty()) {
+            call.respond(HttpStatusCode.OK, messages)
         } else {
-            call.respond(HttpStatusCode.BadRequest, "Invalid group ID.")
+            call.respond(HttpStatusCode.NoContent, "No recent messages found for this group.")
         }
     }
 }
@@ -30,15 +30,15 @@ fun Route.recentChat(chatDataSource: ChatDataSource){
 fun Route.deleteMessage(chatDataSource: ChatDataSource){
     delete("/{id}/delete"){
         val id = call.parameters["id"]
-        if (id != null) {
-            val deleted = chatDataSource.deleteMessage(id)
-            if (deleted) {
-                call.respond(HttpStatusCode.OK, "Message deleted successfully.")
-            } else {
-                call.respond(HttpStatusCode.NotFound, "Message not found.")
-            }
-        } else {
+        if( id == null ){
             call.respond(HttpStatusCode.BadRequest, "Invalid message ID.")
+            return@delete
+        }
+        val deleted = chatDataSource.deleteMessage(id)
+        if (deleted) {
+            call.respond(HttpStatusCode.OK, "Message deleted successfully.")
+        } else {
+            call.respond(HttpStatusCode.NotFound, "Message not found.")
         }
     }
 }

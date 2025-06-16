@@ -16,9 +16,8 @@ class MongoGroupDataSource(db: MongoDatabase) : GroupDataSource {
         return groups.find().toList()
     }
 
-    override suspend fun deleteGroup(id: String): Boolean {
-        val deleteResult = groups.deleteOne(eq("id",id))
+    override suspend fun deleteGroup(groupId: String): Boolean {
+        val deleteResult = groups.deleteOne(eq("id",groupId))
         return deleteResult.deletedCount > 0
     }
-
 }
